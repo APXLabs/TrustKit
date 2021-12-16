@@ -46,7 +46,7 @@ NSArray<NSString *> *convertPinsToHpkpPins(NSSet<NSData *> *knownPins)
 
 NSArray<NSString *> *convertTrustToKeyHashes(SecTrustRef serverTrust, TSKSPKIHashCache * hashCache)
 {
-    NSMutableArray* pins = [NSMutableArray alloc];
+    NSMutableArray* pins = [NSMutableArray array];
     CFIndex certificateChainLen = SecTrustGetCertificateCount(serverTrust);
     for(int i=(int)certificateChainLen-1;i>=0;i--)
     {
