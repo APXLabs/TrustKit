@@ -172,12 +172,10 @@
             
             // Send a notification after all validation is done; this will also trigger a report if pin validation failed
             if (self.validationCallbackQueue && self.validationCallback) {
+                
+                
                 NSTimeInterval validationDuration = [NSDate timeIntervalSinceReferenceDate] - validationStartTime;
-                TSKPinningValidatorResult *result = [[TSKPinningValidatorResult alloc] initWithServerHostname:serverHostname
-                                                                                                  serverTrust:serverTrust
-                                                                                             validationResult:validationResult
-                                                                                           finalTrustDecision:finalTrustDecision
-                                                                                           validationDuration:validationDuration];
+                TSKPinningValidatorResult *result = [[TSKPinningValidatorResult alloc] initWithServerHostname:serverHostname serverTrust:serverTrust validationResult:validationResult finalTrustDecision:finalTrustDecision validationDuration:validationDuration hashCache:(self.spkiHashCache)];
                 dispatch_async(self.validationCallbackQueue, ^{
                     self.validationCallback(result, domainConfigKey, domainConfig);
                 });

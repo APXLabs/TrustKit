@@ -39,7 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
                                      serverTrust:(SecTrustRef)serverTrust
                                 validationResult:(TSKTrustEvaluationResult)validationResult
                               finalTrustDecision:(TSKTrustDecision)finalTrustDecision
-                              validationDuration:(NSTimeInterval)validationDuration;
+                              validationDuration:(NSTimeInterval)validationDuration
+                                       hashCache:(TSKSPKIHashCache *)hashCache;
 
 @end
 

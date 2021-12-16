@@ -18,7 +18,10 @@
 #ifndef TrustKit_reporting_utils_h
 #define TrustKit_reporting_utils_h
 
+#import "Pinning/TSKSPKIHashCache.h"
+
 NSArray<NSString *> *convertTrustToPemArray(SecTrustRef serverTrust);
 NSArray<NSString *> *convertPinsToHpkpPins(NSSet<NSData *> *knownPins);
+NSArray<NSString *> *convertTrustToKeyHashes(SecTrustRef serverTrust, TSKSPKIHashCache * hashCache);
 
 #endif

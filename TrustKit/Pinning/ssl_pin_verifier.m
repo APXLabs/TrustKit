@@ -84,6 +84,7 @@ TSKTrustEvaluationResult verifyPublicKeyPin(SecTrustRef serverTrust, NSString *s
             return TSKTrustEvaluationErrorCouldNotGenerateSpkiHash;
         }
         
+        
         // Is the generated hash in our set of pinned hashes ?
         TSKLog(@"Testing SSL Pin %@", subjectPublicKeyInfoHash);
         if ([knownPins containsObject:subjectPublicKeyInfoHash])

@@ -11,7 +11,6 @@
 
 #import "reporting_utils.h"
 
-
 NSArray<NSString *> *convertTrustToPemArray(SecTrustRef serverTrust)
 {
     // Convert the trust object into an array of PEM certificates
@@ -43,5 +42,21 @@ NSArray<NSString *> *convertPinsToHpkpPins(NSSet<NSData *> *knownPins)
         [formattedPins addObject:[NSString stringWithFormat:@"pin-sha256=\"%@\"", [pin base64EncodedStringWithOptions:(NSDataBase64EncodingOptions)0]]];
     }
     return formattedPins;
+}
+
+NSArray<NSString *> *convertTrustToKeyHashes(SecTrustRef serverTrust, TSKSPKIHashCache * hashCache)
+{
+    NSMutableArray* pins = [NSMutableArray alloc];
+    CFIndex certificateChainLen = SecTrustGetCertificateCount(serverTrust);
+    for(int i=(int)certificateChainLen-1;i>=0;i--)
+    {
+        // Extract the certificate
+        SecCertificateRef certificate = SecTrustGetCertificateAtIndex(serverTrust, i);
+        // Generate the subject public key info hash
+        NSData *pin = [hashCache hashSubjectPublicKeyInfoFromCertificate:certificate];
+        
+        [pins addObject: [pin base64EncodedStringWithOptions:(NSDataBase64EncodingOptions)0]];
+    }
+    return pins;
 }
 

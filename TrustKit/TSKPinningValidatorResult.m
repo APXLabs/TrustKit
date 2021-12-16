@@ -11,6 +11,7 @@
 
 #import "TSKPinningValidatorResult.h"
 #import "Reporting/reporting_utils.h"
+#import "Pinning/TSKSPKIHashCache.h"
 
 @implementation TSKPinningValidatorResult
 
@@ -19,6 +20,7 @@
                                 validationResult:(TSKTrustEvaluationResult)validationResult
                               finalTrustDecision:(TSKTrustDecision)finalTrustDecision
                               validationDuration:(NSTimeInterval)validationDuration
+                                       hashCache:(TSKSPKIHashCache *)hashCache
 {
     NSParameterAssert(serverHostname);
     NSParameterAssert(serverTrust);
@@ -32,6 +34,7 @@
         
         // Convert the server trust to a certificate chain as soon as we get it, as the trust object sometimes gets freed right after the authentication challenge has been handled
         _certificateChain = convertTrustToPemArray(serverTrust);
+        _keyHashes = convertTrustToKeyHashes(serverTrust, hashCache);
     }
     return self;
 }

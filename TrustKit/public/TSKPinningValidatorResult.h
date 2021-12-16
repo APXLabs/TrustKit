@@ -55,4 +55,9 @@
  */
 @property (nonatomic, readonly, nonnull) NSArray *certificateChain;
 
+/**
+ The certificate chain hashes
+ */
+@property (nonatomic, readonly, nonnull) NSArray *keyHashes;
+
 @end
